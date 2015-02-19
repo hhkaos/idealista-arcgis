@@ -1,7 +1,7 @@
 Idealista-ArcGIS
 =================
 
-Este es un proyecto que hemos creado con objetivo de aprender y mejorar nuestros conocimientos sobre tecnologías GIS. 
+Este es un proyecto que hemos creado con objetivo de aprender y mejorar nuestros conocimientos sobre tecnologías GIS.
 
 El proyecto se trata de un buscador de pisos que además de tener en cuenta características del piso tenga en cuenta características del barrio donde queremos que esté el piso. Como podrían ser:
 
@@ -45,10 +45,10 @@ Pero te recomendamos que te unas a la lista de correo para que te presentes, te 
 Equipo
 =================
 Hasta ahora el equipo lo forman (en orden alfabético):
- | Nombre | Github | Linkedin | Twitter
---- | --- | --- | ---
 
-<img src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/3/005/039/3f8/2a6d7f6.jpg" style="width:80px"> |  José Lafuente | n.a. | [Linkedin](http://es.linkedin.com/pub/jose-lafuente/b/92/b54/en) | n.a.
-<img src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/3/005/039/3f8/2a6d7f6.jpg" style="width:80px"> |  Milu Gaspar | [Github](https://github.com/MiluCG) | [Linkedin](http://es.linkedin.com/pub/maria-de-lurdes-caridade-gaspar/66/b55/674/es) | n.a.
-<img src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/3/005/039/3f8/2a6d7f6.jpg" style="width:80px"> | Rafael Garrido Romero | [Github](https://github.com/rgarom) | [Linkedin](http://es.linkedin.com/in/rgarom/es) | n.a.
-<img src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/3/005/039/3f8/2a6d7f6.jpg" style="width:80px">  | Raúl Jiménez Ortega | [Github](https://github.com/hhkaos) | [Linkedin](http://es.linkedin.com/in/jimenezortegaraul/en) | n.a.
+Foto | Nombre | Github | Linkedin | Twitter
+--- | --- | --- | ---
+<img src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/1/000/0bc/20e/0dd417f.jpg" style="width:80px"> |  José Lafuente | n.a. | [Perfil](http://es.linkedin.com/pub/jose-lafuente/b/92/b54/en) | n.a.
+<img src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/3/005/039/3f8/2a6d7f6.jpg" style="width:80px"> |  Milu Gaspar | [MiluCG](https://github.com/MiluCG) | [Perfil](http://es.linkedin.com/pub/maria-de-lurdes-caridade-gaspar/66/b55/674/es) | n.a.
+<img src="https://media.licdn.com/mpr/mpr/shrink_200_200/p/7/000/2b1/2ef/1546991.jpg" style="width:80px"> | Rafael Garrido Romero | [rgarom](https://github.com/rgarom) | [Perfil](http://es.linkedin.com/in/rgarom/es) | n.a.
+<img src="https://media.licdn.com/mpr/mpr/shrinknp_200_200/p/6/005/01c/2dd/1be9db8.jpg" style="width:80px">  | Raúl Jiménez Ortega | [hhkaos](https://github.com/hhkaos) | [Perfil](http://es.linkedin.com/in/jimenezortegaraul/en) | [@hhkaos](http://www.twitter.com/hhkaos)
