@@ -46,6 +46,6 @@ Equipo
 =================
 Hasta ahora el equipo lo forman (en orden alfabético):
 * José Lafuente - Github - [Linkedin](http://es.linkedin.com/pub/jose-lafuente/b/92/b54/en)
+* Milu Gaspar - Github - Linkedin
 * Rafael Garrido Romero - [Github](https://github.com/rgarom) - [Linkedin](http://es.linkedin.com/in/rgarom/es)
 * Raúl Jiménez Ortega - [Github](https://github.com/hhkaos) - [Linkedin](http://es.linkedin.com/in/jimenezortegaraul/en)
-* Milu Gaspar - Github - Linkedin
