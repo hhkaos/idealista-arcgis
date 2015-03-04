@@ -42,7 +42,7 @@
         zoom: 13
       });
 
-      var capaGrafica = new GraphicsLayer();
+      capaGrafica = new GraphicsLayer();
       map.addLayer(capaGrafica);
 
       // configurar el proxy
@@ -73,7 +73,7 @@
         country: "es",
         maxItems: 50,
         numPage: 1,
-        distance: 452,
+        distance: 1002,
         center: "40.42938099999995,-3.7097526269835726",
         propertyType: "bedrooms",
         operation: "A",
@@ -104,7 +104,7 @@
         paintResults(firstResult);
 
 
-        var i, totalPages = Math.min(100, firstResult[1].totalPages);
+        var i, totalPages = Math.min(100, firstResult.totalPages);
 
         var promises = [];
 
