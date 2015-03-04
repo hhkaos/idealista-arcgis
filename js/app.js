@@ -6,12 +6,7 @@ var $GEO = $GEO || {
     maxItems: 50,
     numPage: 1,
     distance: 1002,
-    center: "40.42938099999995,-3.7097526269835726",
-    propertyType: "bedrooms",
-    operation: "A",
-    sex: "X",
-    pictures: true,
-    noSmokers: true
+    center: "40.42938099999995,-3.7097526269835726"
   }
 };
 
@@ -30,6 +25,14 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
     $scope.results = Array();
     $scope.waiting = false;
     $scope.loadButton = "Buscar pisos";
+    $scope.idealista = {
+      noSmokers: true,
+      sex: "I",
+      operation: "A",
+      order: "price",
+      pictures: true,
+      propertyType: "bedrooms"
+    };
 
     var idealistaEndpoint = "http://idealista-prod.apigee.net/public/2/search";
 
@@ -144,6 +147,12 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
     $scope.loadButton = "Buscando...";
 
     $GEO.params.center = lat + "," + lng;
+    $GEO.params.noSmokers = $scope.idealista.noSmokers;
+    $GEO.params.sex = $scope.idealista.sex;
+    $GEO.params.operation = $scope.idealista.operation;
+    $GEO.params.order = $scope.idealista.order;
+    $GEO.params.pictures = $scope.idealista.pictures;
+    $GEO.params.propertyType = $scope.idealista.propertyType;
 
     var firstRequest = $scope.esriRequest({
       url: idealistaEndpoint,

@@ -30,10 +30,37 @@ h1{
 .margin-top-25 { margin-top: 2.5em; }
 .margin-top-30 { margin-top: 3.0em; }
 
+.margin-bottom-05 { margin-bottom: 0.5em; }
+.margin-bottom-10 { margin-bottom: 1.0em; }
+.margin-bottom-15 { margin-bottom: 1.5em; }
+.margin-bottom-20 { margin-bottom: 2.0em; }
+.margin-bottom-25 { margin-bottom: 2.5em; }
+.margin-bottom-30 { margin-bottom: 3.0em; }
+
 #results li{
   float: left;
-  margin-right: 0;
+  margin-right: 2%;
   margin-bottom: 10px;
-  width: 20%;
+  width: 18.4%;
+}
+#results li:nth-child(5n){
+  margin-right: 0;
+}
+#results img{
+  width: 100%;
+  height: 141px;
+}
 
+.clickable{
+  color: #07F;
+  text-decoration: underline;
+}
+
+#form-idealista > .form-group{
+  width: 31%;
+  margin-bottom: .5em;
+  margin-right: 2%;
+}
+#form-idealista .form-control{
+  height: 25px;
 }
