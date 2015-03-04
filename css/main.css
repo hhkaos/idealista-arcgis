@@ -1,0 +1,31 @@
+body{font-family: 'Open Sans', sans-serif;}
+h1{
+  font-size: 1.7em;
+  margin-bottom: .5em;
+  font-weight: 300;
+}
+.unstyled{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.form-group {
+  float: left;
+  width: 41%;
+  margin-right: 3%
+}
+#pois li{
+  position: relative;
+}
+#pois i{  
+  margin-top: 25px;
+  padding: 9px;
+}
+.form-group:nth-child(even){}
+.form-group:nth-child(odd){}
+.margin-top-05 { margin-top: 0.5em; }
+.margin-top-10 { margin-top: 1.0em; }
+.margin-top-15 { margin-top: 1.5em; }
+.margin-top-20 { margin-top: 2.0em; }
+.margin-top-25 { margin-top: 2.5em; }
+.margin-top-30 { margin-top: 3.0em; }

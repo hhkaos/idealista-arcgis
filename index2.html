@@ -10,158 +10,84 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
     <!-- load bootstrap css -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
     <!--<link rel="stylesheet" type="text/css" href="styles/narrow.css">-->
     <!-- load Esri CSS -->
     <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.11/esri/css/esri.css">
     <!-- dijit theme only needed for chart tooltip in popup in this web map -->
     
     <!-- custom styles for this app -->
-    <style type="text/css">
-        .jumbotron {
-            background: #091926 url('images/jumbotron-background.jpg') no-repeat right;
-            color: #fff;
-        }
-        body{
-            font-family: 'Open Sans', sans-serif;
-        }
-        h1{
-            font-size: 1.7em;
-            margin-bottom: .5em;
-            font-weight: 300;
-        }
-    </style>
+    <link href="css/main.css" rel="stylesheet">
 </head>
 
 <body>
     <div class="container">
-        <div class="header">
-            <!--<ul class="nav nav-pills pull-right" role="tablist">
-                <li role="presentation" ng-class="{ active: page === 'examples' }"><a ng-href="#/examples">Examples</a>
-                </li>
-                <li role="presentation" ng-class="{ active: page === 'about' }"><a ng-href="#/about">About</a>
-                </li>
-                <li role="presentation"><a href="http://github.com/esri/angular-esri-map">GitHub</a>
-                </li>
-            </ul>-->
-            <h1 class="text-muted">Buscador de pisos</h1>
+      <div class="header">
+          <h1 class="text-muted">Buscador de pisos</h1>
+      </div>
+
+      <div ng-controller="MapController" class="row">
+              
+        <div class="col-md-8">
+            <esri-map id="map" register-as="map" center="map.center" zoom="map.zoom" basemap="streets"></esri-map>
         </div>
-        <div ng-controller="MapController">
-            <div class="row">
-                <div class="col-md-8">
-                    <esri-map id="map" register-as="map" center="map.center" zoom="map.zoom" basemap="streets"></esri-map>
 
+        <div class="col-md-4">
+          <p>
+            Haz click en el mapa y añade las zonas en las que te gustaría buscar pisos
+          </p>
+          
+          <div ng-show="pois.length">
+            <hr>
+            <ul class="unstyled" id="pois">
+              <li ng-repeat="poi in pois" class="clearfix">
+                
+                <div class="form-group clearfix">
+                  <label><small>Lugar: ({{poi.lat | number:2}}, {{poi.lng | number:2}})</small></label> 
+                  <input type="text" class="form-control" ng-model="poi.name" placeholder="Trabajo, colegio, casa de ..."/> 
                 </div>
-                <div class="col-md-4">
-                  POIs:
-                  <ul>
-                    <li ng-repeat="poi in pois">
-                      <span>{{poi.lat}}</span>
-                      <p>{{poi.lng}}</p>
-                      <p>{{poi.radius}}</p>
-                    </li>
-                  </ul>
-                  <p><a href="#" class="btn">Buscar pisos</a></p>
-                    <p>Click: {{ evt.click.lat | number:3 }}, Lng: {{ evt.click.lng | number:3 }}</p>
-                    <p>Lat: {{ map.center.lat | number:3 }}, Lng: {{ map.center.lng | number:3 }}, Zoom: {{map.zoom}}</p>
+
+                <div class="form-group">
+                  <label><small>Área: (en metros)</small></label>
+                  <input type="text" class="form-control" ng-model="poi.radius" />
                 </div>
-            </div>
+                <i class="fa fa-trash-o btn btn-default" ng-click="delete(poi.id)"></i>
 
-            <div>
-            </div>
+              
+              </li>
+            </ul>
+            <p class="clearfix">
+              <a href="#" class="btn btn btn-primary pull-right">Buscar pisos</a>
+            </p>
+          </div>
 
-        </script>
-    </div>
-    <div class="footer">
-        <p class="text-center">
+          <!--  <p>Click: {{ evt.click.lat | number:3 }}, Lng: {{ evt.click.lng | number:3 }}</p>
+            <p>Lat: {{ map.center.lat | number:3 }}, Lng: {{ map.center.lng | number:3 }}, Zoom: {{map.zoom}}</p>
+          -->
+        </div>
+
+     </div>
+  
+    <div class="footer row margin-top-10">
+        <p class="text-center col-md-12">
             Realizado con <span class="glyphicon glyphicon-heart"></span> por GeoDevelopers con: Idealista API & AngularJS & ArcGIS API & Bootstrap
         </p>
     </div>
-</div>
-<!-- /container -->
-<!-- load Esri JavaScript API -->
-<script type="text/javascript" src="http://js.arcgis.com/3.11compact"></script>
-<!-- load Angular -->
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-sanitize.js"></script>
-<!-- load angular-esri-map module -->
-<script src="bower_components/angular-esri-map/dist/angular-esri-map.js"></script>
-<!-- load this app -->
-<!-- run example app controller -->
-<script type="text/javascript">
-    angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
-    .controller('MapController', function ($scope, esriRegistry) {
-        $scope.map = {
-            center: {
-                lng: -3.709,
-                lat: 40.4329
-            },
-            zoom: 13
-        };
-        $scope.counter = 0;
-        $scope.pois = Array();
-        $scope.evt = { click: {}};
-        $scope.$watch('evt', function(newValue, oldValue){
-            console.log('lastName Changed');
-            console.log(newValue);
-            console.log(oldValue);
+  </div>
+  <!-- /container -->
+  <!-- load Esri JavaScript API -->
+  <script type="text/javascript" src="http://js.arcgis.com/3.11compact"></script>
+  <!-- load Angular -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-sanitize.js"></script>
+  <!-- load angular-esri-map module -->
+  <script src="bower_components/angular-esri-map/dist/angular-esri-map.js"></script>
+  <!-- load this app -->
+  <!-- run example app controller -->
+  <script src="js/app.js"></script>
 
-        });
-
-        esriRegistry.get('map').then(function(map) {
-            require([
-                "esri/map",
-                "esri/layers/GraphicsLayer",    
-                "esri/geometry/Point",  
-                "esri/symbols/PictureMarkerSymbol",     
-                "esri/graphic", 
-                "esri/geometry/webMercatorUtils",
-                "dojo/domReady!"
-                ], function(
-                    Map, GraphicsLayer, Point, PictureMarkerSymbol, Graphic, webMercatorUtils
-                    ) {
-
-                    $scope.capaGrafica = new GraphicsLayer(); 
-                    map.addLayer($scope.capaGrafica);
-                    $scope.Point = Point;
-                    $scope.PictureMarkerSymbol = PictureMarkerSymbol;
-                    $scope.Graphic = Graphic;
-                    $scope.webMercatorUtils = webMercatorUtils;    
-                });
-
-            map.on('click', function(e) {
-                //console.log('map click', e);
-                
-                var point = e.mapPoint;
-                var LongLat = $scope.webMercatorUtils.xyToLngLat(point.x, point.y);
-                
-                
-                $scope.$apply(function(){
-                    $scope.evt.click.lng = LongLat[0];
-                    $scope.evt.click.lat = LongLat[1];  
-                    
-                    $scope.pois.push({
-                      id: $scope.counter,
-                      lng: LongLat[0],
-                      lat: LongLat[1],
-                      radius: 1000
-                    });
-
-                    $scope.counter++;
-                });
-
-                var loc = new $scope.Point(
-                    $scope.evt.click.lng,
-                    $scope.evt.click.lat
-                    ); 
-
-                var symbol = new $scope.PictureMarkerSymbol("img/pin.png", 16, 24); 
-                $scope.capaGrafica.add(new $scope.Graphic(loc, symbol));         
-            });
-        });
-
-});
-</script>
-
+  <a href="https://github.com/hhkaos/idealista-arcgis"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/652c5b9acfaddf3a9c326fa6bde407b87f7be0f4/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png"></a>
 </body>
 </html>
