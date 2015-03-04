@@ -28,6 +28,8 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
     $scope.pois = Array();
     $scope.evt = { click: {}};
     $scope.results = Array();
+    $scope.waiting = false;
+    $scope.loadButton = "Buscar pisos";
 
     var idealistaEndpoint = "http://idealista-prod.apigee.net/public/2/search";
 
@@ -138,6 +140,8 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
     var lat = $scope.pois[0].lat,
         lng = $scope.pois[0].lng;
     
+    $scope.waiting = true;
+    $scope.loadButton = "Buscando...";
 
     $GEO.params.center = lat + "," + lng;
 
@@ -189,7 +193,8 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
         console.log("all requests finished")
 
         //dojo.byId('idealista-count').innerHTML = baseGraphics.length + " resultados";
-
+        $scope.waiting = false;
+        $scope.loadButton = "Buscar pisos";
         deferred.resolve("ok");
       });
     });

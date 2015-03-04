@@ -58,7 +58,7 @@
               </li>
             </ul>
             <p class="clearfix">
-              <a href="#" class="btn btn btn-primary pull-right" ng-click="search()">Buscar pisos</a>
+              <button ng-class="{disabled:waiting}" class="btn btn btn-primary pull-right" ng-click="search()">{{loadButton}}</button>
             </p>
           </div>
 
