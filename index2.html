@@ -58,7 +58,7 @@
               </li>
             </ul>
             <p class="clearfix">
-              <a href="#" class="btn btn btn-primary pull-right">Buscar pisos</a>
+              <a href="#" class="btn btn btn-primary pull-right" ng-click="search()">Buscar pisos</a>
             </p>
           </div>
 
@@ -67,7 +67,23 @@
           -->
         </div>
 
+        <div class="col-md-12 margin-top-10" ng-show="results.length">
+          <h2>Resultados</h2>
+          <ul class="unstyled" id="results">
+            <li ng-repeat="r in results" class="clearfix text-center">
+              <p>
+                <a href="{{r.url}}">
+                  <img ng-src="{{r.thumbnail | trusted }}">
+                </a>
+              </p>
+              <p><small>Precio: {{r.price}}€, {{r.size}}m^2</small></p>
+              <!--
+              address: "oviedo 6"agency: falseagentLogo: ""bathrooms: 0condition: ""country: "es"description: ""distance: "1049"district: "tetuán"exterior: falsefavComment: ""favourite: falsefloor: "2"hasVideo: falselatitude: 40.4489818longitude: -3.7013749municipality: "madrid"neighborhood: "cuatro caminos"numPhotos: 8operation: "A"photosUrl: "www.idealista.com/inmueble/29442030"price: 350propertyCode: "29442030"propertyType: "habitación"propertyTypeCode: "H"province: "madrid"region: ""rooms: 2showAddress: truesize: 60subregion: ""thumbnail: "http://www.idealista.com/static/common/fotos/volFotos7/16/38/88/l_88371188.jpg"url: "www.idealista.com/29442030"userCode: "111582321"userType: 0videoType: "F"-->
+            </li>
+          </ul>
+        </div>
      </div>
+
   
     <div class="footer row margin-top-10">
         <p class="text-center col-md-12">

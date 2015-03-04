@@ -29,3 +29,11 @@ h1{
 .margin-top-20 { margin-top: 2.0em; }
 .margin-top-25 { margin-top: 2.5em; }
 .margin-top-30 { margin-top: 3.0em; }
+
+#results li{
+  float: left;
+  margin-right: 0;
+  margin-bottom: 10px;
+  width: 20%;
+
+}

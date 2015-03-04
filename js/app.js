@@ -1,3 +1,20 @@
+var $GEO = $GEO || {
+  params: {
+    action: 'json',
+    apikey: '0lVOkSbmEM5iIo7pAPFprxFUUuJUCZXU', // <- Valido para desarrolladores.esri.es
+    country: "es",
+    maxItems: 50,
+    numPage: 1,
+    distance: 1002,
+    center: "40.42938099999995,-3.7097526269835726",
+    propertyType: "bedrooms",
+    operation: "A",
+    sex: "X",
+    pictures: true,
+    noSmokers: true
+  }
+};
+
 angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
   .controller('MapController', function ($scope, esriRegistry) {
     $scope.map = {
@@ -10,6 +27,9 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
     $scope.counter = 0;
     $scope.pois = Array();
     $scope.evt = { click: {}};
+    $scope.results = Array();
+
+    var idealistaEndpoint = "http://idealista-prod.apigee.net/public/2/search";
 
     esriRegistry.get('map').then(function(map) {
       require([
@@ -19,17 +39,48 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
         "esri/symbols/PictureMarkerSymbol",     
         "esri/graphic", 
         "esri/geometry/webMercatorUtils",
-        "dojo/domReady!"
+        "esri/request",
+        "esri/Color",
+        "esri/symbols/SimpleMarkerSymbol",
+        "esri/renderers/SimpleRenderer",
+        "esri/InfoTemplate",
+        "dojo/promise/all",
+        "dojo/Deferred",
+        "dojo/domReady!",
         ], function(
-          Map, GraphicsLayer, Point, PictureMarkerSymbol, Graphic, webMercatorUtils
+          Map, GraphicsLayer, Point, PictureMarkerSymbol, Graphic, 
+          webMercatorUtils, esriRequest, Color, SimpleMarkerSymbol, 
+          SimpleRenderer, InfoTemplate, all
           ) {
-
+          //debugger;
           $scope.capaGrafica = new GraphicsLayer(); 
           map.addLayer($scope.capaGrafica);
+
           $scope.Point = Point;
           $scope.PictureMarkerSymbol = PictureMarkerSymbol;
           $scope.Graphic = Graphic;
-          $scope.webMercatorUtils = webMercatorUtils;    
+          $scope.webMercatorUtils = webMercatorUtils;
+          $scope.esriRequest = esriRequest;
+          $scope.allDojo = all;
+
+          esriConfig.defaults.io.proxyUrl = "http://www.rauljimenez.info/dev/proxy/proxy.php";
+          esriConfig.defaults.io.alwaysUseProxy = false;
+
+          var orangeRed = new Color([238, 69, 0, 0.5]);
+          $GEO.marker = new SimpleMarkerSymbol("solid", 10, null, orangeRed);
+          var renderer = new SimpleRenderer($GEO.marker);
+          $scope.capaGrafica.setRenderer(renderer);
+
+          // Y asociamos un pequeño modal con información extra.
+          var template = new InfoTemplate(
+            "Precio: ${price}€",
+            "Dirección: ${address} <br>\
+            Planta: ${floor} <br>\
+            <img src='${thumbnail}'> <br>\
+            <a href='http://${url}' target='_blank'>Más info</a>"
+          );
+          $scope.capaGrafica.setInfoTemplate(template);
+
       });
 
       map.on('click', function(e) {
@@ -82,4 +133,71 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
       i++;
     }
   };
-});
+
+  $scope.search = function(){
+    var lat = $scope.pois[0].lat,
+        lng = $scope.pois[0].lng;
+    
+
+    $GEO.params.center = lat + "," + lng;
+
+    var firstRequest = $scope.esriRequest({
+      url: idealistaEndpoint,
+      //url: "http://localhost:9090/js/response.js",
+      content: $GEO.params,
+      error: esriConfig.defaults.io.errorHandler
+    });
+
+    var paintResults = function(firstResult){
+      var len = firstResult.elementList.length;
+      var el = firstResult.elementList;
+      
+      $scope.$apply(function(){
+        for(i=0; i<len; i++){
+          
+          $scope.results.push(el[i]);
+          var loc = new $scope.Point(el[i].longitude, el[i].latitude);
+          $scope.capaGrafica.add(new $scope.Graphic(loc, $GEO.marker, el[i]));
+        }
+      });
+    };
+
+    firstRequest.then(function(firstResult)
+    {
+      paintResults(firstResult);
+
+
+      var i, totalPages = Math.min(100, firstResult.totalPages);
+
+      var promises = [];
+
+      for(i=2; i<totalPages; i++)
+      {
+        $GEO.params.numPage = i;
+        setTimeout(function(){
+          promises.push( $scope.esriRequest({
+            url: idealistaEndpoint,
+            content: $GEO.params,
+            load: paintResults,
+            error: esriConfig.defaults.io.errorHandler
+          }));
+        },1000);
+      }
+
+      var dl = new $scope.allDojo(promises).then(function(results)
+      {
+        console.log("all requests finished")
+
+        //dojo.byId('idealista-count').innerHTML = baseGraphics.length + " resultados";
+
+        deferred.resolve("ok");
+      });
+    });
+
+  }
+})
+.filter('trusted', ['$sce', function ($sce) {
+    return function(url) {
+        return $sce.trustAsResourceUrl(url);
+    };
+}]);;
