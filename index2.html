@@ -30,6 +30,27 @@
     <div class="row">
         <div class="col-md-8">
             <esri-map id="map" register-as="map" center="map.center" zoom="map.zoom" basemap="streets"></esri-map>
+            <div class="margin-top-10" ng-show="results.length">
+                <h2>{{results.length}} resultados</h2>
+                <p>
+                    Ordenar por:
+                    <span ng-click="predicate = 'price'; reverse=!reverse" class="clickable">Precio</span> |
+                    <span ng-click="predicate = 'size'; reverse=!reverse" class="clickable">Tamaño</span>
+                <p>
+
+                <ul class="unstyled" id="results">
+                    <li ng-repeat="r in results | orderBy:predicate:reverse " class="clearfix text-center">
+                        <p>
+                            <a href="http://{{r.url}}">
+                                <img ng-src="{{r.thumbnail | trusted }}">
+                            </a>
+                        </p>
+                        <p><small>Precio: {{r.price}}€, {{r.size}}m^2</small></p>
+                        <!--
+                        address: "oviedo 6"agency: falseagentLogo: ""bathrooms: 0condition: ""country: "es"description: ""distance: "1049"district: "tetuán"exterior: falsefavComment: ""favourite: falsefloor: "2"hasVideo: falselatitude: 40.4489818longitude: -3.7013749municipality: "madrid"neighborhood: "cuatro caminos"numPhotos: 8operation: "A"photosUrl: "www.idealista.com/inmueble/29442030"price: 350propertyCode: "29442030"propertyType: "habitación"propertyTypeCode: "H"province: "madrid"region: ""rooms: 2showAddress: truesize: 60subregion: ""thumbnail: "http://www.idealista.com/static/common/fotos/volFotos7/16/38/88/l_88371188.jpg"url: "www.idealista.com/29442030"userCode: "111582321"userType: 0videoType: "F"-->
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="col-md-4">
             <h2>Zonas</h2>
@@ -76,8 +97,8 @@
             <p>Indica tus preferencias de búsqueda</p>
             <div class="form-horizontal" id="form-idealista">
                 <div class="form-group">
-                    <label class="col-sm-6 control-label"><small>Tipo de propiedad</small></label>
-                    <div class="col-sm-6">
+                    <label class="col-sm-5 control-label"><small>Tipo de propiedad</small></label>
+                    <div class="col-sm-7">
                         <select class="form-control" ng-model="idealista.propertyType">
                             <option value="bedrooms">Habitación</option>
                             <option value="garages">Garaje</option>
@@ -89,8 +110,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-6 control-label"><small>Operación</small></label>
-                    <div class="col-sm-6">
+                    <label class="col-sm-5 control-label"><small>Operación</small></label>
+                    <div class="col-sm-7">
                         <select class="form-control" ng-model="idealista.operation">
                             <option value="A">Alquiler</option>
                             <option value="V">Venta</option>
@@ -99,8 +120,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-6 control-label"><small>Sexo</small></label>
-                    <div class="col-sm-6">
+                    <label class="col-sm-5 control-label"><small>Sexo</small></label>
+                    <div class="col-sm-7">
                         <select class="form-control" ng-model="idealista.sex">
                             <option value="X">Masculino</option>
                             <option value="F">Femenino</option>
@@ -110,8 +131,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-6 control-label"><small>Fotos</small></label>
-                    <div class="col-sm-6">
+                    <label class="col-sm-5 control-label"><small>Fotos</small></label>
+                    <div class="col-sm-7">
                         <select class="form-control" ng-model="idealista.pictures">
                             <option value="true">Sí</option>
                             <option value="false">No</option>
@@ -120,8 +141,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-6 control-label"><small>Piso sin fumadores</small></label>
-                    <div class="col-sm-6">
+                    <label class="col-sm-5 control-label"><small>Piso sin fumadores</small></label>
+                    <div class="col-sm-7">
                         <select class="form-control" ng-model="idealista.noSmokers">
                             <option value="true">Sí</option>
                             <option value="false">No</option>
@@ -130,8 +151,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-6 control-label"><small>Orden</small></label>
-                    <div class="col-sm-6">
+                    <label class="col-sm-5 control-label"><small>Orden</small></label>
+                    <div class="col-sm-7">
                         <select class="form-control" ng-model="idealista.order">
                             <option value="distance">Distancia</option>
                             <option value="size">Tamaño</option>
@@ -143,30 +164,6 @@
             </div>
         </div>
 
-    </div>
-    <div class="row">
-
-        <div class="col-md-12 margin-top-10" ng-show="results.length">
-            <h2>{{results.length}} resultados</h2>
-            <p>
-                Ordenar por:
-                <span ng-click="predicate = 'price'; reverse=!reverse" class="clickable">Precio</span> |
-                <span ng-click="predicate = 'size'; reverse=!reverse" class="clickable">Tamaño</span>
-            <p>
-
-            <ul class="unstyled" id="results">
-                <li ng-repeat="r in results | orderBy:predicate:reverse " class="clearfix text-center">
-                    <p>
-                        <a href="http://{{r.url}}">
-                            <img ng-src="{{r.thumbnail | trusted }}">
-                        </a>
-                    </p>
-                    <p><small>Precio: {{r.price}}€, {{r.size}}m^2</small></p>
-                    <!--
-                    address: "oviedo 6"agency: falseagentLogo: ""bathrooms: 0condition: ""country: "es"description: ""distance: "1049"district: "tetuán"exterior: falsefavComment: ""favourite: falsefloor: "2"hasVideo: falselatitude: 40.4489818longitude: -3.7013749municipality: "madrid"neighborhood: "cuatro caminos"numPhotos: 8operation: "A"photosUrl: "www.idealista.com/inmueble/29442030"price: 350propertyCode: "29442030"propertyType: "habitación"propertyTypeCode: "H"province: "madrid"region: ""rooms: 2showAddress: truesize: 60subregion: ""thumbnail: "http://www.idealista.com/static/common/fotos/volFotos7/16/38/88/l_88371188.jpg"url: "www.idealista.com/29442030"userCode: "111582321"userType: 0videoType: "F"-->
-                </li>
-            </ul>
-        </div>
     </div>
 
 
