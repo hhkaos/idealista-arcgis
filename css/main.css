@@ -9,11 +9,7 @@ h1{
   margin: 0;
   padding: 0;
 }
-.form-group {
-  float: left;
-  width: 41%;
-  margin-right: 3%
-}
+
 #pois li{
   position: relative;
 }
@@ -21,8 +17,7 @@ h1{
   margin-top: 25px;
   padding: 9px;
 }
-.form-group:nth-child(even){}
-.form-group:nth-child(odd){}
+
 .margin-top-05 { margin-top: 0.5em; }
 .margin-top-10 { margin-top: 1.0em; }
 .margin-top-15 { margin-top: 1.5em; }
@@ -54,13 +49,4 @@ h1{
 .clickable{
   color: #07F;
   text-decoration: underline;
-}
-
-#form-idealista > .form-group{
-  width: 31%;
-  margin-bottom: .5em;
-  margin-right: 2%;
-}
-#form-idealista .form-control{
-  height: 25px;
 }
