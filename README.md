@@ -17,17 +17,15 @@ Así por ejemplo podremos hacer una búsqueda que nos permita encontrar los piso
 
 En este piloto vamos a trabajar sobre el area delimitada de Madrid porque disponemos de varios conjuntos de datos muy completos.
 
-Tecnologías de desarrollo
-=================
+##Tecnologías de desarrollo
 Al principio del proyecto decidimos utilizar como tecnologías para el desarrollo:
 * [La API de Idealista](http://www.idealista.com/labs/api.htm)
 * [La API Javascript de ArcGIS](http://js.arcgis.com)
-* [AngularJS](https://angularjs.org/) / [Angular-Esri-Map](https://github.com/Esri/angular-esri-map) (Bajo consideración aún)
+* [AngularJS](https://angularjs.org/) / [Angular-Esri-Map](https://github.com/Esri/angular-esri-map) 
 * [ArcGIS Online](http://www.arcgis.com)
 * [Nodejs](http://nodejs.org/)
 
-Unirse al equipo
-=================
+##Unirse al equipo
 Si te apetece aprender y colaborar con el proyecto te explicamos como funcionamos.
 
 1. El equipo es totalmente abierto y por tanto cualquier persona es bienvenida
@@ -43,9 +41,8 @@ Por tanto si te animas a unirte puedes:
 
 Pero te recomendamos que te unas a la lista de correo para que te presentes, te agreguemos al grupete de Whatsapp y te compartamos algunos documentos que tenemos con información adicional en Google Drive.
 
-Configuración del entorno 
-=================
-**Entorno de desarrollo**
+##Configuración del entorno 
+###Entorno de desarrollo
 Existe un manual de configuración en la carpeta doc (sin actualizar). Ahora la página se sirve utilizando un servidor en node.js una vez clonado o descargado el repositorio ejecutar:
 
 ```
