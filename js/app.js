@@ -40,10 +40,10 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
     esriRegistry.get('map').then(function(map) {
       require([
         "esri/map",
-        "esri/layers/GraphicsLayer",    
-        "esri/geometry/Point",  
-        "esri/symbols/PictureMarkerSymbol",     
-        "esri/graphic", 
+        "esri/layers/GraphicsLayer",
+        "esri/geometry/Point",
+        "esri/symbols/PictureMarkerSymbol",
+        "esri/graphic",
         "esri/geometry/webMercatorUtils",
         "esri/request",
         "esri/Color",
@@ -54,12 +54,12 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
         "dojo/Deferred",
         "dojo/domReady!",
         ], function(
-          Map, GraphicsLayer, Point, PictureMarkerSymbol, Graphic, 
-          webMercatorUtils, esriRequest, Color, SimpleMarkerSymbol, 
+          Map, GraphicsLayer, Point, PictureMarkerSymbol, Graphic,
+          webMercatorUtils, esriRequest, Color, SimpleMarkerSymbol,
           SimpleRenderer, InfoTemplate, all
           ) {
           //debugger;
-          $scope.capaGrafica = new GraphicsLayer(); 
+          $scope.capaGrafica = new GraphicsLayer();
           map.addLayer($scope.capaGrafica);
 
           $scope.Point = Point;
@@ -91,16 +91,16 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
 
       map.on('click', function(e) {
         //console.log('map click', e);
-        
+
         var poi;
         var point = e.mapPoint;
         var LongLat = $scope.webMercatorUtils.xyToLngLat(point.x, point.y);
-        
-        
+
+
         $scope.$apply(function(){
             $scope.evt.click.lng = LongLat[0].toFixed(3);
-            $scope.evt.click.lat = LongLat[1].toFixed(3);  
-            
+            $scope.evt.click.lat = LongLat[1].toFixed(3);
+
             poi = {
               id: $scope.counter,
               lng: $scope.evt.click.lng,
@@ -116,20 +116,20 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
         var loc = new $scope.Point(
               $scope.evt.click.lng,
               $scope.evt.click.lat
-            ); 
+            );
 
-        var symbol = new $scope.PictureMarkerSymbol("img/pin.png", 16, 24); 
-        $scope.capaGrafica.add(new $scope.Graphic(loc, symbol, poi));         
+        var symbol = new $scope.PictureMarkerSymbol("img/pin.png", 16, 24);
+        $scope.capaGrafica.add(new $scope.Graphic(loc, symbol, poi));
       });
   });
 
   $scope.delete = function(id){
-    
-    var i = 0, 
+
+    var i = 0,
         layer = $scope.capaGrafica,
         pois = $scope.pois,
         len = pois.length;
-    
+
     while(i <= len){
       if(pois[i].id == id){
         pois.splice(i, 1);
@@ -143,7 +143,7 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
   $scope.search = function(){
     var lat = $scope.pois[0].lat,
         lng = $scope.pois[0].lng;
-    
+
     $scope.waiting = true;
     $scope.loadButton = "Buscando...";
 
@@ -154,6 +154,7 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
     $GEO.params.order = $scope.idealista.order;
     $GEO.params.pictures = $scope.idealista.pictures;
     $GEO.params.propertyType = $scope.idealista.propertyType;
+    $GEO.params.distance = $scope.pois[0].radius;
 
     var firstRequest = $scope.esriRequest({
       url: idealistaEndpoint,
@@ -165,10 +166,10 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
     var paintResults = function(firstResult){
       var len = firstResult.elementList.length;
       var el = firstResult.elementList;
-      
+
       $scope.$apply(function(){
         for(i=0; i<len; i++){
-          
+
           $scope.results.push(el[i]);
           var loc = new $scope.Point(el[i].longitude, el[i].latitude);
           $scope.capaGrafica.add(new $scope.Graphic(loc, $GEO.marker, el[i]));
