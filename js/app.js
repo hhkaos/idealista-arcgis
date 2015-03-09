@@ -69,7 +69,7 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
           $scope.esriRequest = esriRequest;
           $scope.allDojo = all;
 
-          esriConfig.defaults.io.proxyUrl = "http://www.rauljimenez.info/dev/proxy/proxy.php";
+          esriConfig.defaults.io.proxyUrl = "/proxy";
           esriConfig.defaults.io.alwaysUseProxy = false;
 
           var orangeRed = new Color([238, 69, 0, 0.5]);

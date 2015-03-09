@@ -41,6 +41,7 @@ exports.start = function(done)
 	var router = express.Router();
 
 	router.get('', views.home);
+	router.get('/proxy', views.proxy);
 	
 	app.use('/', router);
 	app.use("/img", express.static(__dirname + "/img"));
