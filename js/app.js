@@ -27,11 +27,12 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
     $scope.loadButton = "Buscar pisos";
     $scope.idealista = {
       noSmokers: true,
-      sex: "I",
+      sex: "X",
       operation: "A",
       order: "price",
       pictures: true,
-      propertyType: "bedrooms"
+      propertyType: "bedrooms",
+      pets: "false"
     };
 
     var idealistaEndpoint = "http://idealista-prod.apigee.net/public/2/search";
@@ -192,7 +193,9 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
             url: idealistaEndpoint,
             content: $GEO.params,
             load: paintResults,
-            error: esriConfig.defaults.io.errorHandler
+            error: function(e){
+              console.log("Ha habido un error: ",e);
+            }
           }));
         },1000);
       }
@@ -206,6 +209,10 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
         $scope.loadButton = "Buscar pisos";
         deferred.resolve("ok");
       });
+    },function(e){
+      alert("Ha sucedido un error al recuperar los pisos, por favor inténtalo de nuevo.");
+      $scope.waiting = false;
+      $scope.loadButton = "Buscar pisos";
     });
 
   }

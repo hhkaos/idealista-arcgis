@@ -24,6 +24,7 @@ Al principio del proyecto decidimos utilizar como tecnologías para el desarroll
 * [La API Javascript de ArcGIS](http://js.arcgis.com)
 * [AngularJS](https://angularjs.org/) / [Angular-Esri-Map](https://github.com/Esri/angular-esri-map) (Bajo consideración aún)
 * [ArcGIS Online](http://www.arcgis.com)
+* [Nodejs](http://nodejs.org/)
 
 Unirse al equipo
 =================
@@ -41,6 +42,18 @@ Por tanto si te animas a unirte puedes:
 * O [crear un Fork](https://github.com/hhkaos/idealista-arcgis/fork) y posteriormente hacer un Pull-Request
 
 Pero te recomendamos que te unas a la lista de correo para que te presentes, te agreguemos al grupete de Whatsapp y te compartamos algunos documentos que tenemos con información adicional en Google Drive.
+
+Configuración del entorno 
+=================
+**Entorno de desarrollo**
+Existe un manual de configuración en la carpeta doc (sin actualizar). Ahora la página se sirve utilizando un servidor en node.js una vez clonado o descargado el repositorio ejecutar:
+
+```
+$npm install
+$bower install
+$node app.js
+```
+Y abrir un navegador y escribir la url: http://localhost:3000
 
 Equipo
 =================

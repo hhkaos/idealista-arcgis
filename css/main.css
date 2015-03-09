@@ -9,13 +9,34 @@ h1{
   margin: 0;
   padding: 0;
 }
-
+#pois{
+  margin-bottom: 0;
+}
 #pois li{
   position: relative;
 }
-#pois i{  
-  margin-top: 25px;
+#pois .fa-trash-o{  
   padding: 9px;
+}
+#pois .form-group{
+  margin-bottom: 0;
+}
+#pois th{
+  font-size: .9em;
+}
+#pois td{
+  vertical-align: middle;
+}
+#pois th:nth-child(3n),
+#pois td:nth-child(3n){
+  width: 80px;
+}
+#filters{
+  border: 1px dotted #cfcfcf
+}
+#filters h2{
+  margin-bottom: 0.5em;
+  font-size: 20px;
 }
 
 .margin-top-05 { margin-top: 0.5em; }
@@ -43,10 +64,33 @@ h1{
 }
 #results img{
   width: 100%;
-  height: 141px;
+  min-height: 85px;
 }
 
 .clickable{
   color: #07F;
   text-decoration: underline;
+  cursor: pointer
 }
+
+
+.thumbnail{
+  margin-bottom: .5em;
+}
+
+.image img {
+    -webkit-transition: all 1s ease; /* Safari and Chrome */
+    -moz-transition: all 1s ease; /* Firefox */
+    -o-transition: all 1s ease; /* IE 9 */
+    -ms-transition: all 1s ease; /* Opera */
+    transition: all 1s ease;
+}
+
+.image:hover img {
+    -webkit-transform:scale(2.25); /* Safari and Chrome */
+    -moz-transform:scale(2.25); /* Firefox */
+    -ms-transform:scale(2.25); /* IE 9 */
+    -o-transform:scale(2.25); /* Opera */
+     transform:scale(2.25);
+}
+
