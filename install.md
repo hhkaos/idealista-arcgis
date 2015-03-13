@@ -9,7 +9,7 @@ Esta pequeña guía tiene como objetivo mostrar los pasos necesarios para arranc
 Lo primero que debemos hacer es crearnos una cuenta de [github](https://github.com/) y hacer un fork del proyecto.
 
  	
-![gitHub fork](../images/git_fork.png)
+![gitHub fork](images/git_fork.png)
 
 
 Esto nos crea una copia en nuestra cuenta.
@@ -24,7 +24,7 @@ Abrimos Git Shell para generar la llave:
 
 ![Logos gitHub](../images/logos_gitHub.png)
 
-Escribimos los siguientes comandos: Ma información [aquí](https://help.github.com/articles/generating-ssh-keys/#platform-windows) 
+Escribimos los siguientes comandos: Consulta esta [página](https://help.github.com/articles/generating-ssh-keys/#platform-windows) para más información.
 
     #Check for SSH keys	
     	ls ~/.ssh
@@ -92,3 +92,6 @@ En mi caso está en c:\wamp\www\arcgis-idealista\idealista-arcgis.
 
     bower install 
 ![gitHub propiedades](../images/git_img7.png)
+
+###Mantemos nuestro cambios con github###
+
