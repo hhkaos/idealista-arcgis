@@ -16,7 +16,7 @@ Esto nos crea una copia en nuestra cuenta.
 
 ![gitHub fork](../images/git_copia.png)
 
-###[Generamos el ssh keys](https://help.github.com/articles/generating-ssh-keys/#platform-windows)###
+###Generamos el ssh keys###
 
 Generamos una llave única (en mi máquina) que identifica quien soy  para comunicársela a github. 
 
@@ -24,7 +24,7 @@ Abrimos Git Shell para generar la llave:
 
 ![Logos gitHub](../images/logos_gitHub.png)
 
-Escribimos los siguientes comandos:
+Escribimos los siguientes comandos: Ma información [aquí](https://help.github.com/articles/generating-ssh-keys/#platform-windows) 
 
     #Check for SSH keys	
     	ls ~/.ssh
