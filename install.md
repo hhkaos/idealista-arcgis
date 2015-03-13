@@ -1,19 +1,30 @@
 ## CONFIGURACIÓN ENTORNO DE TRABAJO ##
 
 
-Esta pequeña guía tiene como objetivo mostrar los pasos necesarios para arranar con el proyecto de programación.
+Esta pequeña guía tiene como objetivo mostrar los pasos necesarios para arrancar con el proyecto a todos aquellos que como yo empezamos a trabajar con github.
 
 
-###Fork del proyecto###
- 
-	 •	Entran en cuenta de github (en mi caso servigis)
-	
-	 •	Hacer un fork del proyecto a nuestra cuenta.
+
+###Copia del proyecto original en GIT 
+Lo primero que debemos hacer es crearnos una cuenta de [github](https://github.com/) y hacer un fork del proyecto.
+
+ 	
+![gitHub fork](../images/git_fork.png)
+
+
+Esto nos crea una copia en nuestra cuenta.
+
+![gitHub fork](../images/git_copia.png)
 
 ###[Generamos el ssh keys](https://help.github.com/articles/generating-ssh-keys/#platform-windows)###
 
-Abrimos el Git Shell:
+Generamos una llave única (en mi máquina) que identifica quien soy  para comunicársela a github. 
+
+Abrimos Git Shell para generar la llave:
+
 ![Logos gitHub](../images/logos_gitHub.png)
+
+Escribimos los siguientes comandos:
 
     #Check for SSH keys	
     	ls ~/.ssh
@@ -63,11 +74,18 @@ Una vez terminado el proceso, tendremos nuestra copia en local.
 ![gitHub propiedades](../images/git_img5.png)
 
 
+    Git remote –v
+    git remote add hhkaos git@github.com:hhkaos/idealista-arcgis.git
+    git pull hhkaos master
+
+
+
 ###Instalamos [bower](http://bower.io/)###
 
 Continuamos en el Shell y nos posicionamos en el directorio del proyecto. 
 
 En mi caso está en c:\wamp\www\arcgis-idealista\idealista-arcgis.
+
 
     Npm install –g bower 
 ![gitHub propiedades](../images/git_img6.png)
