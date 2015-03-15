@@ -95,3 +95,4 @@ En mi caso está en c:\wamp\www\arcgis-idealista\idealista-arcgis.
 
 ###Mantemos nuestro cambios con github###
 
+completar.......
