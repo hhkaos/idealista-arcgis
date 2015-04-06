@@ -140,82 +140,81 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
     }
   };
 
-  $scope.search = function(){
-    var lat = $scope.pois[0].lat,
-        lng = $scope.pois[0].lng;
+  var paintResults = function(result){
+    var len = result.elementList.length;
+    var el = result.elementList;
 
+    $scope.$apply(function(){
+      for(i=0; i<len; i++){
+
+        $scope.results.push(el[i]);
+        var loc = new $scope.Point(el[i].longitude, el[i].latitude);
+        $scope.capaGrafica.add(new $scope.Graphic(loc, $GEO.marker, el[i]));
+      }
+    });
+  };
+
+  function endpointRequest(poiId) {
+    var lat = $scope.pois[poiId].lat;
+    var lng = $scope.pois[poiId].lng;
+
+    $GEO.params.center = lat + "," + lng;
+    $GEO.params.distance = $scope.pois[poiId].radius;
+
+    var deferred = $scope.esriRequest({
+      url: idealistaEndpoint,
+      //url: "http://localhost:9090/js/response.js",
+      content: $GEO.params,
+      load: paintResults,
+      error: function(e){
+        console.log("Ha habido un error: "+ e);
+      }
+    });
+    return deferred.promise;
+  }
+
+  $scope.search = function(){
     $scope.waiting = true;
     $scope.loadButton = "Buscando...";
 
-    $GEO.params.center = lat + "," + lng;
     $GEO.params.noSmokers = $scope.idealista.noSmokers;
     $GEO.params.sex = $scope.idealista.sex;
     $GEO.params.operation = $scope.idealista.operation;
     $GEO.params.order = $scope.idealista.order;
     $GEO.params.pictures = $scope.idealista.pictures;
     $GEO.params.propertyType = $scope.idealista.propertyType;
-    $GEO.params.distance = $scope.pois[0].radius;
 
-    var firstRequest = $scope.esriRequest({
-      url: idealistaEndpoint,
-      //url: "http://localhost:9090/js/response.js",
-      content: $GEO.params,
-      error: esriConfig.defaults.io.errorHandler
-    });
 
-    var paintResults = function(firstResult){
-      var len = firstResult.elementList.length;
-      var el = firstResult.elementList;
+    var i;
+    //, totalPages = Math.min(100, firstResult.totalPages);
 
-      $scope.$apply(function(){
-        for(i=0; i<len; i++){
+    var promises = [];
+    var poisNum = $scope.pois.length;
 
-          $scope.results.push(el[i]);
-          var loc = new $scope.Point(el[i].longitude, el[i].latitude);
-          $scope.capaGrafica.add(new $scope.Graphic(loc, $GEO.marker, el[i]));
-        }
-      });
-    };
-
-    firstRequest.then(function(firstResult)
+    for(i=0; i<poisNum; i++)
     {
-      paintResults(firstResult);
+      //$GEO.params.numPage = i;
+      setTimeout(function(i) {
+        promises.push(endpointRequest(i));
+      }, i*2000, i);
+    }
 
-
-      var i, totalPages = Math.min(100, firstResult.totalPages);
-
-      var promises = [];
-
-      for(i=2; i<totalPages; i++)
+    setTimeout(function() {
+      $scope.allDojo(promises).then(function(results)
       {
-        $GEO.params.numPage = i;
-        setTimeout(function(){
-          promises.push( $scope.esriRequest({
-            url: idealistaEndpoint,
-            content: $GEO.params,
-            load: paintResults,
-            error: function(e){
-              console.log("Ha habido un error: ",e);
-            }
-          }));
-        },1000);
-      }
+        console.log("all requests finished");
 
-      var dl = new $scope.allDojo(promises).then(function(results)
-      {
-        console.log("all requests finished")
+        //paintResults(results);
 
         //dojo.byId('idealista-count').innerHTML = baseGraphics.length + " resultados";
         $scope.waiting = false;
         $scope.loadButton = "Buscar pisos";
-        deferred.resolve("ok");
+      },function(e){
+        alert("Ha sucedido un error al recuperar los pisos, por favor inténtalo de nuevo.");
+        $scope.waiting = false;
+        $scope.loadButton = "Buscar pisos";
       });
-    },function(e){
-      alert("Ha sucedido un error al recuperar los pisos, por favor inténtalo de nuevo.");
-      $scope.waiting = false;
-      $scope.loadButton = "Buscar pisos";
-    });
-
+    },poisNum*2000);
   }
 })
 .filter('trusted', ['$sce', function ($sce) {
