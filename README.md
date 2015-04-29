@@ -43,7 +43,9 @@ Pero te recomendamos que te unas a la lista de correo para que te presentes, te 
 
 ##Configuración del entorno 
 ###Entorno de desarrollo
-Existe un manual de configuración en la carpeta doc (sin actualizar). Ahora la página se sirve utilizando un servidor en node.js una vez clonado o descargado el repositorio ejecutar:
+Existe un manual de configuración del entorno: [install.md](install.md) 
+
+Ahora la página se sirve utilizando un servidor en node.js una vez clonado o descargado el repositorio ejecutar:
 
 ```
 $npm install
