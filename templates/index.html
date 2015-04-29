@@ -7,10 +7,10 @@
   <meta charset="utf-8">
   <title>Buscador: idealista-arcgis</title>
   <meta name="description" content="Proyecto creado desde la comunidad de Geodevelopers.org">
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
-  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="http://js.arcgis.com/3.11/esri/css/esri.css">
+  <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.11/esri/css/esri.css">
   <link href="css/main.css" rel="stylesheet">
 </head>
 
@@ -36,7 +36,7 @@
               <ul class="unstyled" id="results">
                 <li ng-repeat="r in results | orderBy:predicate:reverse " class="clearfix text-center">
                   <p class="thumbnail">
-                    <a href="http://{{r.url}}" class="image">
+                    <a href="//{{r.url}}" class="image">
                       <img ng-src="{{r.thumbnail | trusted }}" onError="this.onerror=null;this.src='/img/noimage.gif';">
                     </a>
                   </p>
@@ -73,7 +73,7 @@
                       - showAddress: true
                       - size: 60
                       - subregion: ""
-                      - thumbnail: "http://www.idealista.com/static/common/fotos/volFotos7/16/38/88/l_88371188.jpg"
+                      - thumbnail: "//www.idealista.com/static/common/fotos/volFotos7/16/38/88/l_88371188.jpg"
                       - url: "www.idealista.com/29442030"
                       - userCode: "111582321"
                       - userType: 0
@@ -213,15 +213,15 @@
 
     <div class="footer row margin-top-10">
       <p class="text-center col-md-12">
-        Realizado con <span class="glyphicon glyphicon-heart"></span> por GeoDevelopers con: <a href="http://www.idealista.com/labs/api.htm">Idealista API</a> + <a href="https://angularjs.org/">AngularJS</a> + <a href="http://js.arcgis.com">ArcGIS API</a> + <a href="http://getbootstrap.com/">Bootstrap</a>
+        Realizado con <span class="glyphicon glyphicon-heart"></span> por GeoDevelopers con: <a href="//www.idealista.com/labs/api.htm">Idealista API</a> + <a href="https://angularjs.org/">AngularJS</a> + <a href="//js.arcgis.com">ArcGIS API</a> + <a href="//getbootstrap.com/">Bootstrap</a>
       </p>
     </div>
   </div>
   
-  <script type="text/javascript" src="http://js.arcgis.com/3.11compact"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-sanitize.js"></script>
+  <script type="text/javascript" src="//js.arcgis.com/3.11compact"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-sanitize.js"></script>
   <script src="bower_components/angular-esri-map/dist/angular-esri-map.js"></script>
   <script src="js/app.js"></script>
 
