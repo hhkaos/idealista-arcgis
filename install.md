@@ -21,7 +21,7 @@ Generamos una llave única (en mi máquina) que identifica quien soy  para comun
 
 Abrimos Git Shell para generar la llave:
 
-![Logos gitHub](/images/logos_gitHub.png)
+![Logos gitHub](/images/logos_gitHub.png)_
 
 Escribimos los siguientes comandos: Consulta esta [página](https://help.github.com/articles/generating-ssh-keys/#platform-windows) para más información.
 
