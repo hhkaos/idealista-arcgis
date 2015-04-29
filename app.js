@@ -2,6 +2,7 @@
 
 var server = null;
 
+
 function errorHandler(err, req, res, next) 
 {
 	res.status(500);
@@ -30,7 +31,7 @@ exports.start = function(done)
   		res.header("Access-Control-Allow-Headers", "X-Requested-With");
   		next();
  	});
-
+	app.set('port', (process.env.PORT || 3000));
 	app.use(bodyParser.urlencoded({ extended: false }));
 	app.use(bodyParser.json());
 	app.use(methodOverride());
@@ -55,7 +56,7 @@ exports.start = function(done)
 
 	if(!server)
 	{
-		server = app.listen(3000, function()
+		server = app.listen(app.get('port'), function()
 		{			
 			done && done();
 		});		
