@@ -1,3 +1,4 @@
+// Objeto JSON con parámetros por defecto para la API de Idealista
 var $GEO = $GEO || {
   params: {
     action: 'json',
@@ -10,8 +11,12 @@ var $GEO = $GEO || {
   }
 };
 
-angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
+// Creamos el módulo con las dependecias a
+// esri.map -> Directivas creadas por Esri 
+// ngSanitize -> Modulo para poder renderizar una cadena con HTML
+angular.module('idealista-arcgis', ['esri.map', 'ngSanitize'])
   .controller('MapController', function ($scope, esriRegistry) {
+    //Creamos el controlador (MapController)
     $scope.map = {
         center: {
             lng: -3.709,
@@ -25,6 +30,8 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
     $scope.results = Array();
     $scope.waiting = false;
     $scope.loadButton = "Buscar pisos";
+    
+    // Definimos la configuración por defecto de la búsqueda
     $scope.idealista = {
       noSmokers: true,
       sex: "X",
@@ -37,6 +44,7 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
 
     var idealistaEndpoint = "http://idealista-prod.apigee.net/public/2/search";
 
+    // Servicio de esri-map que devuelve el un mapa
     esriRegistry.get('map').then(function(map) {
       require([
         "esri/map",
@@ -58,7 +66,9 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
           webMercatorUtils, esriRequest, Color, SimpleMarkerSymbol,
           SimpleRenderer, InfoTemplate, all
           ) {
-          //debugger;
+          
+          // Aquí creamos las capas y las metemos en la variable de entorno 
+          // ($scope) para poder acceder luego desde fuera de la función
           $scope.capaGrafica = new GraphicsLayer();
           map.addLayer($scope.capaGrafica);
 
@@ -89,15 +99,15 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
 
       });
 
+      // Añadimos un marcados al hacer clic
       map.on('click', function(e) {
-        //console.log('map click', e);
-
         var poi;
         var point = e.mapPoint;
         var LongLat = $scope.webMercatorUtils.xyToLngLat(point.x, point.y);
 
-
         $scope.$apply(function(){
+            // Necesitamos ejecutar el método $apply para actualizar los 
+            // enlaces (bindings) y recuperar la latitud y longitud real
             $scope.evt.click.lng = LongLat[0].toFixed(3);
             $scope.evt.click.lat = LongLat[1].toFixed(3);
 
@@ -123,13 +133,14 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
       });
   });
 
+  // Definimos un método delete(id) para eliminar un POI del mapa
   $scope.delete = function(id){
-
     var i = 0,
         layer = $scope.capaGrafica,
         pois = $scope.pois,
         len = pois.length;
 
+    // Recorremos el Array de POIs en busca del que queremos borrar.
     while(i <= len){
       if(pois[i].id == id){
         pois.splice(i, 1);
@@ -140,13 +151,13 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
     }
   };
 
+  // Pintar resultados 
   var paintResults = function(result){
     var len = result.elementList.length;
     var el = result.elementList;
 
     $scope.$apply(function(){
       for(i=0; i<len; i++){
-
         $scope.results.push(el[i]);
         var loc = new $scope.Point(el[i].longitude, el[i].latitude);
         $scope.capaGrafica.add(new $scope.Graphic(loc, $GEO.marker, el[i]));
@@ -154,25 +165,30 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
     });
   };
 
-  function endpointRequest(poiId) {
+  // Método para lanzar la búsqueda sobre un punto a la API de Idealista
+  var endpointRequest = function(poiId) {
     var lat = $scope.pois[poiId].lat;
     var lng = $scope.pois[poiId].lng;
 
+    // Establecemos la localización el radio de la búsqueda
     $GEO.params.center = lat + "," + lng;
     $GEO.params.distance = $scope.pois[poiId].radius;
 
+    // Lanzamos la petición
     var deferred = $scope.esriRequest({
       url: idealistaEndpoint,
-      //url: "http://localhost:9090/js/response.js",
       content: $GEO.params,
       load: paintResults,
       error: function(e){
         console.log("Ha habido un error: "+ e);
       }
     });
+    // Devolvemos la promesa devuelta por el método esriRequest.
+    // Más info sobre las prromesas y el objetos Deferred: http://bit.ly/1cKr1lR
     return deferred.promise;
   }
 
+  // Método para lanzar la búsqueda sobre todos los POIs
   $scope.search = function(){
     $scope.waiting = true;
     $scope.loadButton = "Buscando...";
@@ -183,7 +199,6 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
     $GEO.params.order = $scope.idealista.order;
     $GEO.params.pictures = $scope.idealista.pictures;
     $GEO.params.propertyType = $scope.idealista.propertyType;
-
 
     var i;
     //, totalPages = Math.min(100, firstResult.totalPages);
@@ -205,7 +220,6 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
         console.log("all requests finished");
 
         //paintResults(results);
-
         //dojo.byId('idealista-count').innerHTML = baseGraphics.length + " resultados";
         $scope.waiting = false;
         $scope.loadButton = "Buscar pisos";
@@ -218,6 +232,8 @@ angular.module('esri-webmap-example', ['esri.map', 'ngSanitize'])
   }
 })
 .filter('trusted', ['$sce', function ($sce) {
+    // Filtro generado para poder usar variables enlazadas (bindings) en las
+    // URLs de la etiquetas; como por ejemplo: <img ng-src="{{r.thumbnail}}">
     return function(url) {
         return $sce.trustAsResourceUrl(url);
     };
