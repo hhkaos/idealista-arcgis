@@ -12,9 +12,11 @@
     "express": "~4.8.0",
     "method-override": "~2.1.2",
     "request": "~2.40.0"
+    "bower": "latest"
   },
   "scripts": {
     "postinstall": "bower install"
   },
-  "devDependencies": {}
+  "devDependencies": {
+  }
 }
