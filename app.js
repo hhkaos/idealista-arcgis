@@ -18,11 +18,11 @@ function logErrors(err, req, res, next)
 
 exports.start = function(done)
 {
-	var express         = require("express"),
+	var express         	= require("express"),
 			app             = express(),
 			bodyParser      = require("body-parser"),
 			methodOverride  = require("method-override"),
-			views						= require("./views");
+			views			= require("./views");
 
 	exports.app = app;
 
