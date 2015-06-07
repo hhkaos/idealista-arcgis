@@ -14,8 +14,8 @@ var $GEO = $GEO || {
 // Creamos el módulo con las dependecias a
 // esri.map -> Directivas creadas por Esri 
 // ngSanitize -> Modulo para poder renderizar una cadena con HTML
-angular.module('idealista-arcgis', ['esri.map', 'ngSanitize'])
-  .controller('MapController', function ($scope, esriRegistry) {
+angular.module('idealista-arcgis', ['esri.map', 'ngSanitize', 'ngLodash'])
+  .controller('MapController', function ($scope, esriRegistry, lodash) {
     //Creamos el controlador (MapController)
     $scope.map = {
         center: {
@@ -155,12 +155,15 @@ angular.module('idealista-arcgis', ['esri.map', 'ngSanitize'])
   var paintResults = function(result){
     var len = result.elementList.length;
     var el = result.elementList;
+    $scope.$apply(function() {
+      for(i=0; i<len; i++) {
 
-    $scope.$apply(function(){
-      for(i=0; i<len; i++){
-        $scope.results.push(el[i]);
-        var loc = new $scope.Point(el[i].longitude, el[i].latitude);
-        $scope.capaGrafica.add(new $scope.Graphic(loc, $GEO.marker, el[i]));
+        //Antes de añadir un nuevo punto al array comprobamos que no exista
+        if(lodash.where($scope.results,{url:el[i].url}).length == 0) {
+          $scope.results.push(el[i]);
+          var loc = new $scope.Point(el[i].longitude, el[i].latitude);
+          $scope.capaGrafica.add(new $scope.Graphic(loc, $GEO.marker, el[i]));
+        }
       }
     });
   };
