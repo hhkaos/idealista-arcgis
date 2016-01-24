@@ -10,7 +10,7 @@
   <link href='//fonts.googleapis.com/css?family=Open+Sans:400,300,600' rel='stylesheet' type='text/css'>
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="stylesheet" type="text/css" href="//js.arcgis.com/3.11/esri/css/esri.css">
+  <link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
   <link href="css/main.css" rel="stylesheet">
 </head>
 
@@ -24,7 +24,7 @@
       <div class="col-md-8">
         <esri-map id="map" register-as="map" center="map.center" zoom="map.zoom" basemap="streets"></esri-map>
         <div class="margin-top-10" ng-show="results.length">
-          <h2>{{results.length}} resultados</h2>
+          <h2>{{results.length}} resultados <button ng-click="clearMap()" class="pull-right btn btn-default">Borrar resultados</button></h2>
           <p>
             Ordenar por:
             <span ng-click="predicate = 'price'; reverse=!reverse" class="clickable">Precio</span> |
@@ -69,7 +69,8 @@
                       - propertyType: "habitación"
                       - propertyTypeCode: "H"
                       - province: "madrid"
-                      - region: ""rooms: 2
+                      - region: ""
+                      - rooms: 2
                       - showAddress: true
                       - size: 60
                       - subregion: ""
@@ -90,12 +91,25 @@
                     <label class="col-sm-5 control-label"><small>Tipo de propiedad</small></label>
                     <div class="col-sm-7">
                       <select class="form-control" ng-model="idealista.propertyType">
+                        <option value="homes">Vivienda</option>
                         <option value="bedrooms">Habitación</option>
-                        <option value="garages">Garaje</option>
-                        <option value="homes">Casa</option>
                         <option value="offices">Oficina</option>
+                        <option value="garages">Garaje</option>
                         <option value="premises">Premises</option>
                       </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-5 control-label"><small>Precio máximo</small></label>
+                    <div class="col-sm-7">
+                      <input type="" class="form-control" ng-model="idealista.maxPrice"/>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-5 control-label"><small>Tamaño mínimo</small></label>
+                    <div class="col-sm-7">
+                      <input type="" class="form-control" ng-model="idealista.minSize"/>
                     </div>
                   </div>
 
@@ -157,6 +171,7 @@
                     <input type="checkbox" ng-model="idealista.gayPartners">
                 </div>
             </div>
+
             <div class="form-group">
                 <label class="col-sm-5 control-label"><small>Personas que compartiréis</small></label>
                 <div class="col-sm-7">
@@ -218,7 +233,7 @@
     </div>
   </div>
   
-  <script type="text/javascript" src="//js.arcgis.com/3.11compact"></script>
+  <script src="http://js.arcgis.com/3.13/"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-sanitize.js"></script>

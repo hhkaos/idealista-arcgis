@@ -33,12 +33,11 @@ angular.module('idealista-arcgis', ['esri.map', 'ngSanitize', 'ngLodash'])
     
     // Definimos la configuración por defecto de la búsqueda
     $scope.idealista = {
-      noSmokers: true,
       sex: "X",
       operation: "A",
       order: "price",
       pictures: true,
-      propertyType: "bedrooms",
+      propertyType: "homes",
       pets: "false"
     };
 
@@ -58,13 +57,14 @@ angular.module('idealista-arcgis', ['esri.map', 'ngSanitize', 'ngLodash'])
         "esri/symbols/SimpleMarkerSymbol",
         "esri/renderers/SimpleRenderer",
         "esri/InfoTemplate",
+        "esri/layers/FeatureLayer",
         "dojo/promise/all",
         "dojo/Deferred",
         "dojo/domReady!",
         ], function(
           Map, GraphicsLayer, Point, PictureMarkerSymbol, Graphic,
           webMercatorUtils, esriRequest, Color, SimpleMarkerSymbol,
-          SimpleRenderer, InfoTemplate, all
+          SimpleRenderer, InfoTemplate, FeatureLayer, all
           ) {
           
           // Aquí creamos las capas y las metemos en la variable de entorno 
@@ -78,6 +78,7 @@ angular.module('idealista-arcgis', ['esri.map', 'ngSanitize', 'ngLodash'])
           $scope.webMercatorUtils = webMercatorUtils;
           $scope.esriRequest = esriRequest;
           $scope.allDojo = all;
+          $scope.FeatureLayer = FeatureLayer;
 
           esriConfig.defaults.io.proxyUrl = "/proxy";
           esriConfig.defaults.io.alwaysUseProxy = false;
@@ -96,7 +97,13 @@ angular.module('idealista-arcgis', ['esri.map', 'ngSanitize', 'ngLodash'])
             <a href='http://${url}' target='_blank'>Más info</a>"
           );
           $scope.capaGrafica.setInfoTemplate(template);
+          
+          var lineas = $scope.FeatureLayer("http://services.arcgis.com/TxVIjeHs8geXMISi/arcgis/rest/services/MadridCiudad/FeatureServer/3");
+          var estaciones = $scope.FeatureLayer("http://services.arcgis.com/TxVIjeHs8geXMISi/arcgis/rest/services/MadridCiudad/FeatureServer/2");
+          map.addLayer(estaciones);
+          map.addLayer(lineas);
 
+          
       });
 
       // Añadimos un marcados al hacer clic
@@ -151,6 +158,11 @@ angular.module('idealista-arcgis', ['esri.map', 'ngSanitize', 'ngLodash'])
     }
   };
 
+  $scope.clearMap = function(){
+    $scope.capaGrafica.clear()
+    $scope.results = [];
+  }
+
   // Pintar resultados 
   var paintResults = function(result){
     var len = result.elementList.length;
@@ -202,6 +214,8 @@ angular.module('idealista-arcgis', ['esri.map', 'ngSanitize', 'ngLodash'])
     $GEO.params.order = $scope.idealista.order;
     $GEO.params.pictures = $scope.idealista.pictures;
     $GEO.params.propertyType = $scope.idealista.propertyType;
+    $GEO.params.maxPrice = $scope.idealista.maxPrice;
+    $GEO.params.minSize = $scope.idealista.minSize;
 
     var i;
     //, totalPages = Math.min(100, firstResult.totalPages);
@@ -224,12 +238,17 @@ angular.module('idealista-arcgis', ['esri.map', 'ngSanitize', 'ngLodash'])
 
         //paintResults(results);
         //dojo.byId('idealista-count').innerHTML = baseGraphics.length + " resultados";
-        $scope.waiting = false;
-        $scope.loadButton = "Buscar pisos";
+        $scope.$apply(function(){
+          $scope.waiting = false;
+          $scope.loadButton = "Buscar pisos";
+        });
       },function(e){
+        $scope.$apply(function(){
+          $scope.waiting = false;
+          $scope.loadButton = "Buscar pisos";
+        });
+        
         alert("Ha sucedido un error al recuperar los pisos, por favor inténtalo de nuevo.");
-        $scope.waiting = false;
-        $scope.loadButton = "Buscar pisos";
       });
     },poisNum*2000);
   }
